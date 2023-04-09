@@ -3,6 +3,8 @@ github.com/fahlmant/aws-policy v0.0.0-20230408201354-01f72520e49e h1:xc/+c252QzX
 github.com/fahlmant/aws-policy v0.0.0-20230408201354-01f72520e49e/go.mod h1:SM8ZFWoVMgrgW8b+5AsP3eVAxuqFsTsO1ZGnYgMuSOs=
 github.com/fahlmant/aws-policy v0.0.0-20230408201459-589ccda39cef h1:h06xiXWIwzTv4LsYeHuKsIkAi5kQ0BGk5aeyL6PxYww=
 github.com/fahlmant/aws-policy v0.0.0-20230408201459-589ccda39cef/go.mod h1:SM8ZFWoVMgrgW8b+5AsP3eVAxuqFsTsO1ZGnYgMuSOs=
+github.com/fahlmant/aws-policy v0.0.0-20230409135140-75864c7d1771 h1:aJJq6sonZz6AfFI5Ex+pXFx5lrbiTvPE+pFkE+a/vhM=
+github.com/fahlmant/aws-policy v0.0.0-20230409135140-75864c7d1771/go.mod h1:SM8ZFWoVMgrgW8b+5AsP3eVAxuqFsTsO1ZGnYgMuSOs=
 github.com/mitchellh/mapstructure v1.4.1 h1:CpVNEelQCZBooIPDn+AR3NpivK/TIKU8bDxdASFVQag=
 github.com/mitchellh/mapstructure v1.4.1/go.mod h1:bFUtVrKA4DC2yAKiSyO/QUcy7e+RRV2QTWOzhPopBRo=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
