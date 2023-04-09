@@ -7,9 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	//"github.com/aws/aws-sdk-go/service/iam"
-	awsPolicy "github.com/n4ch04/aws-policy"
-	awspolicy "github.com/n4ch04/aws-policy"
+	awsPolicy "github.com/fahlmant/aws-policy"
 )
 
 const (
@@ -17,8 +15,6 @@ const (
 	// "The size of each managed policy cannot exceed 6,144 characters."
 	managedPolicyCharLimit = 6144
 	policyVersionString    = "2012-10-17"
-	// The number of characters for the version string and {} in the json
-	characterCountBuffer = 26
 )
 
 func main() {
@@ -56,13 +52,28 @@ func splitPolicy(filename string, filecontents []byte) error {
 		return err
 	}
 
+	// Build dummy policy with no statements
+	dummyPolicy := awsPolicy.Policy{
+		Version: policyVersionString,
+	}
+
+	// Find the length of the dummy policy
+	dummyJSON, err := getJSONfromPolicy(dummyPolicy)
+	if err != nil {
+		return err
+	}
+
 	var newPoliciesToBuild []awsPolicy.Policy
 	statementIndex := 0
 	// Loop until we're at the end of statements
-	for {
-		newPolicy := awspolicy.Policy{}
-		totalSize := characterCountBuffer
+	for statementIndex < len(fileAsPolicy.Statements) {
+		newPolicy := awsPolicy.Policy{}
+		totalSize := len(string(dummyJSON))
 		for {
+			if statementIndex >= len(fileAsPolicy.Statements) {
+				break
+			}
+
 			statement := fileAsPolicy.Statements[statementIndex]
 			// Convert the struct to JSON to count characters
 			statementAsJSON, err := getJSONfromStatemet(statement)
@@ -70,7 +81,9 @@ func splitPolicy(filename string, filecontents []byte) error {
 				return err
 			}
 
-			if totalSize+len(statementAsJSON) < managedPolicyCharLimit {
+			if totalSize+len(statementAsJSON)+1 < managedPolicyCharLimit {
+				// Adding one for the comma
+				totalSize += len(statementAsJSON) + 1
 				newPolicy.Statements = append(newPolicy.Statements, statement)
 				statementIndex += 1
 			} else {
@@ -104,7 +117,7 @@ func splitPolicy(filename string, filecontents []byte) error {
 }
 
 func getJSONfromStatemet(statement awsPolicy.Statement) ([]byte, error) {
-	jsonStatemet, err := json.Marshal(statement)
+	jsonStatemet, err := json.MarshalIndent(statement, "", "    ")
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
@@ -114,7 +127,7 @@ func getJSONfromStatemet(statement awsPolicy.Statement) ([]byte, error) {
 }
 
 func getJSONfromPolicy(policy awsPolicy.Policy) ([]byte, error) {
-	jsonPolicy, err := json.Marshal(policy)
+	jsonPolicy, err := json.MarshalIndent(policy, "", "    ")
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
