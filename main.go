@@ -66,7 +66,7 @@ func splitPolicy(filename string, filecontents []byte) error {
 	var newPoliciesToBuild []awsPolicy.Policy
 	statementIndex := 0
 	// Loop until we're at the end of statements
-	for statementIndex < len(fileAsPolicy.Statements) {
+	for {
 		newPolicy := awsPolicy.Policy{}
 		totalSize := len(string(dummyJSON))
 		for {
@@ -91,7 +91,7 @@ func splitPolicy(filename string, filecontents []byte) error {
 			}
 		}
 		newPoliciesToBuild = append(newPoliciesToBuild, newPolicy)
-		if statementIndex == len(fileAsPolicy.Statements) {
+		if statementIndex >= len(fileAsPolicy.Statements) {
 			break
 		}
 	}
