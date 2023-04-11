@@ -12,7 +12,7 @@ import (
 
 const (
 	// https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-quotas.html#reference_iam-quotas-entity-length
-	// "The size of each managed policy cannot exceed 6,144 characters."
+	// "The size of each managed policy cannot exceed 6,144 characters." This does not include whitespace
 	managedPolicyCharLimit = 6144
 	policyVersionString    = "2012-10-17"
 )
